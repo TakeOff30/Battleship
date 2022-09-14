@@ -1,15 +1,5 @@
 import Player from '../scripts/Player';
 
-test('setting opponent', () => {
-    const user = new Player('Player1');
-    const CPU = new Player('CPU');
-
-    user.setOpponent(CPU);
-    CPU.setOpponent(user);
-
-    expect(user.opponent).toBe(CPU);
-});
-
 test('ship placing', () => {
     const user = new Player('Player1');
     const CPU = new Player('CPU');
@@ -29,17 +19,17 @@ test('opponent setting', () => {
     user.setOpponent(CPU);
     CPU.setOpponent(user);
 
-    expect(user.opponent).toBe(CPU);
+    expect(user.opponentsGameboard).toEqual(CPU.gameboard);
 });
 
 test('making a play(user)', () => {
     const user = new Player('Player1');
     const CPU = new Player('CPU');
 
-    user.setOpponent(CPU);
     CPU.setOpponent(user);
+    user.setOpponent(CPU);
 
-    user.makePlay(1, 1);
+    user.makePlay(1, 2);
 
-    expect(CPU.gameboard.coords[1][1]).toBe(true);
+    expect(user.opponentsGameboard.coords[2][1]).toBeTruthy();
 });

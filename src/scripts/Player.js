@@ -12,11 +12,11 @@ export default class Player {
             new Ship(3, 'Submarine'),
             new Ship(2, 'Patrol Boat'),
         ];
-        this.opponent = null;
+        this.opponentsGameboard = null;
     }
 
     setOpponent(opponent) {
-        this.opponent = opponent;
+        this.opponentsGameboard = opponent.gameboard;
     }
 
     placeShip(x, y, dir) {
@@ -27,10 +27,10 @@ export default class Player {
     }
 
     makePlay(x, y) {
-        this.opponent.gameboard.receiveAttack(x, y);
+        this.opponentsGameboard.receiveAttack(x, y);
     }
 
-    makePlay() {
+    makePlayCPU() {
         let x = Math.floor(Math.random() * 10 + 1);
         let y = Math.floor(Math.random() * 10 + 1);
 
