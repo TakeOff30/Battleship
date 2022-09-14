@@ -2,7 +2,7 @@ import Gameboard from './Gameboard';
 import Ship from './Ship';
 
 export default class Player {
-    constructor(name, opponent) {
+    constructor(name) {
         this.gameboard = new Gameboard();
         this.name = name;
         this.toPlace = [
@@ -12,12 +12,16 @@ export default class Player {
             new Ship(3, 'Submarine'),
             new Ship(2, 'Patrol Boat'),
         ];
+        this.opponent = null;
+    }
+
+    setOpponent(opponent) {
         this.opponent = opponent;
     }
 
-    placeShip() {
+    placeShip(x, y, dir) {
         if (this.toPlace.length > 0) {
-            this.gameboard.placeShip(this.toPlace[0]);
+            this.gameboard.placeShip(x, y, dir, this.toPlace[0]);
             this.toPlace.splice(0, 1);
         }
     }
