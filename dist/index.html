@@ -10,8 +10,37 @@
     </head>
     <body>
         <main class="home">
-            <h1>Battleships</h1>
-            <button>Play</button>
+            <h1 class="main">Battleships</h1>
+            <button class="play main">Play</button>
+            <div class="modal">
+                <h2>Lead your fleet like a real captain.</h2>
+                <div class="inputCont">
+                    <input type="text" />
+                    <span>Insert your name</span>
+                </div>
+                <button class="save">Save</button>
+                <div>
+                    <h2>Rules</h2>
+                    <p>
+                        Place your ships in a strategic way.<br />
+                        The first player able to successfully destroy the
+                        opponent's fleet wins!
+                    </p>
+                </div>
+            </div>
+            <div class="gameSection">
+                <div class="titleSection">
+                    <h2>Battleship</h2>
+                    <div class="userSection">
+                        <h3 class="playerTitle"></h3>
+                        <div class="gameboard"></div>
+                    </div>
+                    <div class="cpuSection">
+                        <h3>CPU</h3>
+                        <div class="gameboard cpu"></div>
+                    </div>
+                </div>
+            </div>
         </main>
     </body>
 </html>
