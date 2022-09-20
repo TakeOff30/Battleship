@@ -3,6 +3,7 @@ export default class Ship {
         this.length = length;
         this.hits = 0;
         this.name = name;
+        this.horizontal = false;
     }
 
     hit() {

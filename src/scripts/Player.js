@@ -40,4 +40,6 @@ export default class Player {
         }
         this.opponent.gameboard.receiveAttack(x, y);
     }
+
+    placeShipCPU() {}
 }
