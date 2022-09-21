@@ -4,24 +4,40 @@ import Player from './scripts/Player';
 import Gameboard from './scripts/Gameboard';
 
 export default class Game {
-    constructor() {}
+    constructor() {
+        this.player = null;
+        this.cpu = null;
+        this.dir = null;
+    }
 
-    static main() {}
+    static main() {
+        this.setup;
+        this.start;
+        this.placing;
+    }
 
     static setup() {
         const playerName = document.querySelector('.playerTitle');
-        const player = new Player(playerName.textContent);
-        const cpu = new Player('CPU');
+        this.player = new Player(playerName.textContent);
+        this.cpu = new Player('CPU');
+        this.dir = this.player.toPlace[0].dir;
 
-        player.setOpponent(cpu);
-        cpu.setOpponent(player);
-
-        player.toPlace.forEach((ship) => {
-            UI.horizontalPlacing(ship);
-        });
+        this.player.setOpponent(cpu);
+        this.cpu.setOpponent(player);
     }
 
-    static start() {}
+    static async placing() {
+        while (this.player.toPlace.length > 0) {
+            let x = await UI.getUserX();
+            let y = await UI.getUserY();
+        }
+    }
 
-    static end() {}
+    static start() {
+        UI.startGame;
+    }
+
+    static end() {
+        UI.endGameModal;
+    }
 }
