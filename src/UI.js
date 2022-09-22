@@ -63,17 +63,13 @@ const UI = (function () {
         }
     }
 
-    /*  function getUserX() {
-        return
-    }
+    function getUserX() {}
 
-    function getUserY() {
-        
-    }
+    function getUserY() {}
 
     function endGameModal() {}
 
-    function startGame() {} */
+    function startGame() {}
 
     return {
         enableButtons,
