@@ -2,8 +2,7 @@ const UI = (function () {
     function enableButtons() {
         const play = document.querySelector('.play');
         const save = document.querySelector('.save');
-        const vertical = document.querySelector('.vertical');
-        const horizontal = document.querySelector('.horizontal');
+        const direction = document.querySelector('.direction');
 
         play.addEventListener('click', () => {
             hideMain();
@@ -51,21 +50,68 @@ const UI = (function () {
     function createGrid(container, player) {
         let square;
 
-        for (let x = 1; x <= 10; x++) {
-            for (let y = 1; y <= 10; y++) {
+        for (let y = 1; y <= 10; y++) {
+            for (let x = 1; x <= 10; x++) {
                 square = document.createElement('div');
                 square.classList.add('square');
                 square.classList.add(player);
-                square.setAttribute('data-x', x);
                 square.setAttribute('data-y', y);
+                square.setAttribute('data-x', x);
                 container.appendChild(square);
             }
         }
     }
 
-    function getUserX() {}
+    /* available squares */
 
-    function getUserY() {}
+    function availables(ship) {
+        /*removing previously cliked*/
+        const preClicked = document.querySelector('.clicked');
+        if (clicked != undefined) {
+            preClicked.classList.remove('clicked');
+        }
+
+        const cpuSection = document.querySelector('.cpuSection');
+        cpuSection.classList.add('unable');
+
+        /*which are unable*/
+        let limit;
+        const squares = document.querySelectorAll('.square');
+        /*ship size*/
+        if (ship.dir == 0) {
+            limit = 12 - ship.length;
+            squares.forEach((square) => {
+                if (square.getAttribute('data-x') > limit) {
+                    square.classList.add('unable');
+                }
+            });
+        } else if (ship.dir == 1) {
+            limit = 12 - ship.length;
+            squares.forEach((square) => {
+                if (square.getAttribute('data-y') > limit) {
+                    square.classList.add('unable');
+                }
+            });
+        }
+        /*occuppied slots*/
+
+        const clickables = document.querySelectorAll('.square:not(.unable)');
+        clickables.forEach((clickable) => {
+            clickable.addEventListener('click', () => {
+                clickable.classList.add('clicked');
+            });
+        });
+    }
+
+    function getUserX(square) {
+        const x = square.getAttribute('data-x');
+        return x;
+    }
+
+    function getUserY(square) {
+        const y = square.getAttribute('data-y');
+        return y;
+    }
 
     function endGameModal() {}
 
@@ -73,9 +119,11 @@ const UI = (function () {
 
     return {
         enableButtons,
-        horizontalPlacing,
-        verticalPlacing,
+        availables,
+        getUserX,
+        getUserY,
         startGame,
+        availables,
     };
 })();
 
