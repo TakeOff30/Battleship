@@ -1,42 +1,35 @@
 import UI from './UI';
-import Ship from './scripts/Ship';
 import Player from './scripts/Player';
-import Gameboard from './scripts/Gameboard';
 
-export default class Game {
-    constructor() {
-        this.player = null;
-        this.cpu = null;
-        this.dir = null;
+const Game = (function () {
+    let player;
+    let cpu;
+
+    function main() {
+        setup();
     }
 
-    static main() {
-        this.setup;
-        this.start;
-        this.placing;
-    }
-
-    static setup() {
+    function setup() {
         const playerName = document.querySelector('.playerTitle');
-        this.player = new Player(playerName.textContent);
-        this.cpu = new Player('CPU');
-        this.dir = this.player.toPlace[0].dir;
+        player = new Player(playerName.textContent);
+        cpu = new Player('CPU');
 
-        this.player.setOpponent(cpu);
-        this.cpu.setOpponent(player);
+        player.setOpponent(cpu);
+        cpu.setOpponent(player);
+        /*solve placing*/
+        placing();
     }
 
-    static async placing() {
-        while (this.player.toPlace.length > 0) {
-            UI.availables(this.player.toPlace[0]);
-            const clicked = await this.searchForClicked;
+    function placing() {
+        player.toPlace.forEach((ship) => {
+            UI.availables(ship);
             let x = clicked.getAttribute('data-x');
             let y = clicked.getAttribute('data-y');
-            this.player.gameboard.placeShip(x, y, toPlace[0].dir, toPlace[0]);
-        }
+            player.placeShip(x, y, ship.dir);
+        });
     }
 
-    static searchForClicked() {
+    function searchForClicked() {
         let clicked = undefined;
 
         while (clicked == undefined) {
@@ -46,13 +39,12 @@ export default class Game {
         return clicked;
     }
 
-    static switchDirection() {}
+    return {
+        main,
+        setup,
+        placing,
+        searchForClicked,
+    };
+})();
 
-    static start() {
-        UI.startGame;
-    }
-
-    static end() {
-        UI.endGameModal;
-    }
-}
+export default Game;

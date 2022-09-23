@@ -1,3 +1,3 @@
 import UI from './UI';
 
-document.addEventListener('DOMContentLoaded', UI.enableButtons);
+document.addEventListener('DOMContentLoaded', UI.enableButtons());
