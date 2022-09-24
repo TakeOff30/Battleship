@@ -67,6 +67,7 @@ const UI = (function () {
     /* available squares */
 
     function availables(ship) {
+        if (ship == undefined) return;
         /*removing previously cliked*/
         const preClicked = document.querySelector('.clicked');
         const preOccupied = document.querySelectorAll('.occupied');
@@ -104,17 +105,22 @@ const UI = (function () {
             });
         }
 
-        const clickables = document.querySelectorAll(
-            '.square:not(.unable):not(.occupied)'
+        let clickables = document.querySelectorAll(
+            '.square:not(.unable):not(.ship)'
         );
         clickables.forEach((clickable) => {
-            clickable.addEventListener('click', () => {
-                clickable.classList.add('clicked');
-            });
+            const oldElem = clickable;
+            const newElem = oldElem.cloneNode(true);
+            oldElem.parentNode.replaceChild(newElem, oldElem);
+        });
+        clickables = document.querySelectorAll(
+            '.square:not(.unable):not(.ship)'
+        );
+        clickables.forEach((clickable) => {
             clickable.addEventListener('mouseover', () => {
                 let x = clickable.getAttribute('data-x'),
                     y = clickable.getAttribute('data-y');
-                clickable.style.backgroundColor = 'gray';
+                clickable.classList.add('hovered');
                 let toHover;
                 if (ship.dir == 0) {
                     for (let i = 1; i < ship.length; i++) {
@@ -126,7 +132,7 @@ const UI = (function () {
                                 y +
                                 '"]'
                         );
-                        toHover.style.backgroundColor = 'gray';
+                        toHover.classList.add('hovered');
                     }
                 } else {
                     for (let i = 1; i < ship.length; i++) {
@@ -137,14 +143,14 @@ const UI = (function () {
                                 (parseInt(y) + parseInt(i)) +
                                 '"]'
                         );
-                        toHover.style.backgroundColor = 'gray';
+                        toHover.classList.add('hovered');
                     }
                 }
             });
             clickable.addEventListener('mouseout', () => {
                 let x = clickable.getAttribute('data-x'),
                     y = clickable.getAttribute('data-y');
-                clickable.style.backgroundColor = 'white';
+                clickable.classList.remove('hovered');
                 let toHover;
                 if (ship.dir == 0) {
                     for (let i = 1; i < ship.length; i++) {
@@ -155,7 +161,7 @@ const UI = (function () {
                                 y +
                                 '"]'
                         );
-                        toHover.style.backgroundColor = 'white';
+                        toHover.classList.remove('hovered');
                     }
                 } else {
                     for (let i = 1; i < ship.length; i++) {
@@ -166,7 +172,7 @@ const UI = (function () {
                                 (parseInt(y) + parseInt(i)) +
                                 '"]'
                         );
-                        toHover.style.backgroundColor = 'white';
+                        toHover.classList.remove('hovered');
                     }
                 }
             });
@@ -184,7 +190,11 @@ const UI = (function () {
             let toUnable;
             for (let i = start; i < end; i++) {
                 toUnable = document.querySelector(
-                    '[data-x=' + start + '][data-y=' + end + ']'
+                    '[data-x="' +
+                        i +
+                        '"][data-y="' +
+                        square.getAttribute('data-y') +
+                        '"]'
                 );
                 toUnable.classList.add('occupied');
             }
@@ -196,7 +206,11 @@ const UI = (function () {
             let toUnable;
             for (let i = start; i < end; i++) {
                 toUnable = document.querySelector(
-                    '[data-x=' + start + '][data-y=' + end + ']'
+                    '[data-x="' +
+                        square.getAttribute('data-x') +
+                        '"][data-y="' +
+                        i +
+                        '"]'
                 );
                 toUnable.classList.add('occupied');
             }

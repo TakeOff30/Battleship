@@ -182,7 +182,14 @@
     background-color: white;
     width: 100%;
 }
-
+.square.occupied {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.square.hovered {
+    background-color: green;
+}
 .square.ship {
     background-color: yellow;
 }

@@ -1,9 +1,11 @@
 import UI from './UI';
 import Player from './scripts/Player';
+import Ship from './scripts/Ship';
 
 const Game = (function () {
     let player;
     let cpu;
+    let dir = 0;
 
     function main() {
         setup();
@@ -16,34 +18,44 @@ const Game = (function () {
 
         player.setOpponent(cpu);
         cpu.setOpponent(player);
-        /*solve placing*/
+
         placing();
     }
 
+    /* this goes in ui */
     function placing() {
-        player.toPlace.forEach((ship) => {
-            UI.availables(ship);
-            let x = clicked.getAttribute('data-x');
-            let y = clicked.getAttribute('data-y');
-            player.placeShip(x, y, ship.dir);
+        if (player.toPlace == []) return;
+        UI.availables(player.toPlace[0]);
+        const clickables = document.querySelectorAll(
+            '.square:not(.unable):not(.occupied)'
+        );
+
+        clickables.forEach((clickable) => {
+            clickable.addEventListener('click', () => {
+                clickable.classList.add('clicked');
+                const clicked = document.querySelector('.clicked');
+                const hovered = document.querySelectorAll('.hovered');
+                hovered.forEach((hover) => {
+                    hover.classList.remove('hovered');
+                    hover.classList.add('ship');
+                });
+                dir = player.toPlace[0].dir;
+                player.placeShip(
+                    clicked.getAttribute('data-x'),
+                    clicked.getAttribute('data-y'),
+                    dir
+                );
+                console.log(player.toPlace);
+
+                placing();
+            });
         });
-    }
-
-    function searchForClicked() {
-        let clicked = undefined;
-
-        while (clicked == undefined) {
-            clicked = document.querySelector('.clicked');
-        }
-
-        return clicked;
     }
 
     return {
         main,
         setup,
         placing,
-        searchForClicked,
     };
 })();
 

@@ -6,11 +6,11 @@ export default class Player {
         this.gameboard = new Gameboard();
         this.name = name;
         this.toPlace = [
-            new Ship(5, 'Carrier'),
-            new Ship(4, 'Battleship'),
-            new Ship(3, 'Destroyer'),
-            new Ship(3, 'Submarine'),
             new Ship(2, 'Patrol Boat'),
+            new Ship(3, 'Submarine'),
+            new Ship(3, 'Destroyer'),
+            new Ship(4, 'Battleship'),
+            new Ship(5, 'Carrier'),
         ];
         this.opponentsGameboard = null;
     }
