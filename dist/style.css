@@ -148,13 +148,13 @@
     justify-content: space-around;
     position: relative;
 }
-.titleSection button{
+.titleSection button {
     font-size: 20px;
     position: absolute;
-    top:15px;
+    top: 15px;
     left: 20px;
 }
-.titleSection button:hover{
+.titleSection button:hover {
     top: 10px;
     background-color: rgb(14, 49, 78);
     color: white;
@@ -177,7 +177,9 @@
     justify-content: center;
 }
 
-.unable {
+.unable,
+.unableX,
+.unableY {
     opacity: 0.5;
     pointer-events: none;
     cursor: not-allowed;

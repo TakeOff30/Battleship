@@ -4,6 +4,7 @@ const UI = (function () {
     function enableButtons() {
         const play = document.querySelector('.play');
         const save = document.querySelector('.save');
+        const direction = document.querySelector('.direction');
 
         play.addEventListener('click', () => {
             hideMain();
@@ -15,6 +16,9 @@ const UI = (function () {
             playerTitle.textContent = nameInput.value;
             displayGameboards();
             Game.main();
+        });
+        direction.addEventListener('click', () => {
+            Game.changeDirection();
         });
     }
 
@@ -113,22 +117,28 @@ const UI = (function () {
         /*depending on ship size*/
         if (ship.dir == 0) {
             squares.forEach((square) => {
+                if (square.classList.contains('unableY'))
+                    square.classList.remove('unableY');
                 if (
                     square.getAttribute('data-x') >= limit ||
                     square.classList.contains('ship')
                 ) {
-                    square.classList.add('unable');
+                    square.classList.add('unableX');
                     if (square.classList.contains('ship'))
                         setDistanceBetweenShips(square, 0, minimumDistance);
                 }
             });
         } else if (ship.dir == 1) {
             squares.forEach((square) => {
-                if (square.getAttribute('data-y') >= limit) {
-                    square.classList.add('unable');
-                } else if (square.classList.contains('ship')) {
-                    square.classList.add('unable');
-                    setDistanceBetweenShips(square, 1, minimumDistance);
+                if (square.classList.contains('unableX'))
+                    square.classList.remove('unableX');
+                if (
+                    square.getAttribute('data-y') >= limit ||
+                    square.classList.contains('ship')
+                ) {
+                    square.classList.add('unableY');
+                    if (square.classList.contains('ship'))
+                        setDistanceBetweenShips(square, 1, minimumDistance);
                 }
             });
         }
