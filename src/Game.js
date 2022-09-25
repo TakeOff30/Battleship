@@ -20,6 +20,7 @@ const Game = (function () {
         cpu.setOpponent(player);
 
         placing();
+        placingCPU();
     }
 
     /* this goes in ui */
@@ -45,17 +46,27 @@ const Game = (function () {
                     clicked.getAttribute('data-y'),
                     dir
                 );
-                console.log(player.toPlace);
-
                 placing();
             });
         });
+    }
+
+    function changeDirection() {
+        player.toPlace[0].dir == 0
+            ? (player.toPlace[0].dir = 1)
+            : (player.toPlace[0].dir = 0);
+        placing();
+    }
+
+    function placingCPU() {
+        while (cpu.toPlace.length > 0) {}
     }
 
     return {
         main,
         setup,
         placing,
+        changeDirection,
     };
 })();
 

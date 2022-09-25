@@ -26,6 +26,8 @@ export default class Player {
         }
     }
 
+    placeShipCPU() {}
+
     makePlay(x, y) {
         this.opponentsGameboard.receiveAttack(x, y);
     }
@@ -40,6 +42,4 @@ export default class Player {
         }
         this.opponent.gameboard.receiveAttack(x, y);
     }
-
-    placeShipCPU() {}
 }
