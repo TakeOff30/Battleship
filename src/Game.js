@@ -9,24 +9,27 @@ const Game = (function () {
 
 	function main() {
 		setup();
-		startGame();
 	}
 
-	function setup() {
+	async function setup() {
 		const playerName = document.querySelector('.playerTitle');
 		player = new Player(playerName.textContent);
 		cpu = new Player('CPU');
 
 		player.setOpponent(cpu);
 		cpu.setOpponent(player);
-
 		placing();
-		placingCPU();
 	}
 
 	/* this goes in ui */
 	function placing() {
-		if (player.toPlace == []) return;
+		console.log(player.toPlace);
+		if (player.toPlace.length == 0) {
+			placingCPU();
+			startGame();
+
+			console.log('ciao');
+		}
 		UI.availables(player.toPlace[0]);
 		const clickables = document.querySelectorAll(
 			'.square:not(.unable):not(.occupied)'
@@ -60,7 +63,7 @@ const Game = (function () {
 	}
 
 	function placingCPU() {
-		while (cpu.toPlace.length > 0) {
+		while (cpu.toPlace.length != 0) {
 			cpu.placeShipCPU();
 		}
 	}
