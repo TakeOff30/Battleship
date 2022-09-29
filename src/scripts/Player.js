@@ -1,3 +1,4 @@
+import { CleanPlugin } from 'webpack';
 import Gameboard from './Gameboard';
 import Ship from './Ship';
 
@@ -32,38 +33,38 @@ export default class Player {
 		if (dir == 0) {
 			x = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
 			y = Math.floor(Math.random() * 10 + 1);
-		} else {
-			x = Math.floor(Math.random() * 10 + 1);
-			y = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
-		}
-		/*verify if placement is legal*/
-		if (dir == 0) {
 			start = (x - 1) * 10 + y;
 			end = start + this.toPlace[0].length - 1;
 			if (end > 10) return;
-			for (let i = start; i < end; i++) {
-				if (
-					this.gameboard.coords[i][1] == true ||
-					this.gameboard.coords[i][1] == undefined
-				)
-					return;
+			if (isPositionAvailable(start, end, dir)) {
+				this.placeShip(x, y, dir);
 			}
 		} else {
+			x = Math.floor(Math.random() * 10 + 1);
+			y = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
 			start = (x - 1) * 10 + y;
 			end = start + this.toPlace[0].length * 10;
-			console.log(end);
 			if (end > 100) return;
-			for (let i = 0; i < this.toPlace[0].length; i++) {
-				if (
-					this.gameboard.coords[start][1] == true ||
-					this.gameboard.coords[start][1] == undefined
-				)
-					return;
+			if (isPositionAvailable(start, end, dir)) {
+				this.placeShip(x, y, dir);
 			}
 		}
 
 		this.gameboard.placeShip(x, y, dir, this.toPlace[0]);
 		this.toPlace.splice(0, 1);
+	}
+
+	isPositionAvailable(start, end, dir) {
+		let inc;
+		dir == 0 ? (inc = 1) : (inc = 10);
+		for (let i = start; i < end; i = i + inc) {
+			if (
+				this.gameboard.coords[i][1] ||
+				this.gameboard.coords[i][1] == undefined
+			)
+				return false;
+		}
+		return true;
 	}
 
 	makePlay(x, y) {

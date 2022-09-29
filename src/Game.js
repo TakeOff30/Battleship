@@ -1,6 +1,5 @@
 import UI from './UI';
 import Player from './scripts/Player';
-import Ship from './scripts/Ship';
 
 const Game = (function () {
 	let player;
@@ -27,8 +26,6 @@ const Game = (function () {
 		if (player.toPlace.length == 0) {
 			placingCPU();
 			startGame();
-
-			console.log('ciao');
 		}
 		UI.availables(player.toPlace[0]);
 		const clickables = document.querySelectorAll(
@@ -37,13 +34,8 @@ const Game = (function () {
 
 		clickables.forEach((clickable) => {
 			clickable.addEventListener('click', () => {
-				clickable.classList.add('clicked');
+				UI.onSelection(clickable, player.toPlace[0]);
 				const clicked = document.querySelector('.clicked');
-				const hovered = document.querySelectorAll('.hovered');
-				hovered.forEach((hover) => {
-					hover.classList.remove('hovered');
-					hover.classList.add('ship');
-				});
 				dir = player.toPlace[0].dir;
 				player.placeShip(
 					clicked.getAttribute('data-x'),
@@ -66,6 +58,7 @@ const Game = (function () {
 		while (cpu.toPlace.length != 0) {
 			cpu.placeShipCPU();
 		}
+		console.log(cpu.gameboard.coords);
 	}
 
 	function startGame() {

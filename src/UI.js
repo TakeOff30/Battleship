@@ -105,6 +105,16 @@ const UI = (function () {
 		});
 	}
 
+	function onSelection(clickable, ship) {
+		clickable.classList.add('clicked');
+		const hovered = document.querySelectorAll('.hovered');
+		hovered.forEach((hover) => {
+			hover.classList.remove('hovered');
+			hover.classList.add('ship');
+			hover.setAttribute('data-ship', ship.name);
+		});
+	}
+
 	function cleanPreviousPlacement() {
 		const preClicked = document.querySelector('.clicked');
 		const preOccupied = document.querySelectorAll('.occupied');
@@ -125,28 +135,38 @@ const UI = (function () {
 			squares.forEach((square) => {
 				if (square.classList.contains('unableY'))
 					square.classList.remove('unableY');
-				if (
-					square.getAttribute('data-x') >= limit ||
-					square.classList.contains('ship')
-				) {
-					square.classList.add('unableX');
-					if (square.classList.contains('ship'))
-						setDistanceBetweenShips(square, 0, minimumDistance);
-				}
+
+				xLimits(square, limit, minimumDistance);
 			});
 		} else if (ship.dir == 1) {
 			squares.forEach((square) => {
 				if (square.classList.contains('unableX'))
 					square.classList.remove('unableX');
-				if (
-					square.getAttribute('data-y') >= limit ||
-					square.classList.contains('ship')
-				) {
-					square.classList.add('unableY');
-					if (square.classList.contains('ship'))
-						setDistanceBetweenShips(square, 1, minimumDistance);
-				}
+
+				yLimits(square, limit, minimumDistance);
 			});
+		}
+	}
+
+	function xLimits(square, limit, minimumDistance) {
+		if (
+			square.getAttribute('data-x') >= limit ||
+			square.classList.contains('ship')
+		) {
+			square.classList.add('unableX');
+			if (square.classList.contains('ship'))
+				setDistanceBetweenShips(square, 0, minimumDistance);
+		}
+	}
+
+	function yLimits(square, limit, minimumDistance) {
+		if (
+			square.getAttribute('data-y') >= limit ||
+			square.classList.contains('ship')
+		) {
+			square.classList.add('unableY');
+			if (square.classList.contains('ship'))
+				setDistanceBetweenShips(square, 0, minimumDistance);
 		}
 	}
 
@@ -299,6 +319,7 @@ const UI = (function () {
 		getUserX,
 		getUserY,
 		removeEventListeners,
+		onSelection,
 	};
 })();
 

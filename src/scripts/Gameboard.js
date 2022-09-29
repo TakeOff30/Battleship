@@ -36,12 +36,9 @@ export default class GameBoard {
 
 	availableSquare(x, y) {
 		const square = (x - 1) * 10 + y;
-
-		if (this.coords[square][1] == false) {
-			return true;
-		} else {
-			return false;
-		}
+		let ris;
+		this.coords[square][1] ? (ris = true) : (ris = false);
+		return ris;
 	}
 
 	receiveAttack(x, y) {
@@ -61,10 +58,8 @@ export default class GameBoard {
 	}
 
 	hasShips() {
-		if (this.alive == 0) {
-			return false;
-		} else {
-			return true;
-		}
+		let ris;
+		this.alive == 0 ? (ris = false) : (ris = true);
+		return ris;
 	}
 }
