@@ -28,7 +28,8 @@ export default class Player {
     }
 
     placeShipCPU() {
-        let dir = Math.floor(Math.random() + 1);
+        /*not working*/
+        let dir = Math.round(Math.random());
         let x, y, start, end;
         if (dir == 0) {
             x = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
