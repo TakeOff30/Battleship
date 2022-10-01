@@ -56,8 +56,10 @@ const Game = (function () {
 
     function placingCPU() {
         do {
+            console.log(cpu.toPlace[0]);
             cpu.placeShipCPU();
         } while (cpu.toPlace.length > 0);
+        console.log(cpu.gameboard.coords);
     }
 
     function startGame() {

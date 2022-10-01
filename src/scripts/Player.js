@@ -34,36 +34,37 @@ export default class Player {
         if (dir == 0) {
             x = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
             y = Math.floor(Math.random() * 10 + 1);
-            start = (x - 1) * 10 + y;
+            start = (y - 1) * 10 + x;
+            console.log(start);
             end = start + this.toPlace[0].length - 1;
+            console.log(end);
             if (end > 10) return;
             if (this.isPositionAvailable(start, end, dir)) {
                 this.placeShip(x, y, dir);
+            } else {
+                return;
             }
         } else {
             x = Math.floor(Math.random() * 10 + 1);
             y = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
-            start = (x - 1) * 10 + y;
+            start = (y - 1) * 10 + x;
+            console.log(start);
             end = start + this.toPlace[0].length * 10;
+            console.log(end);
             if (end > 100) return;
             if (this.isPositionAvailable(start, end, dir)) {
                 this.placeShip(x, y, dir);
+            } else {
+                return;
             }
         }
-
-        this.gameboard.placeShip(x, y, dir, this.toPlace[0]);
-        this.toPlace.splice(0, 1);
     }
 
     isPositionAvailable(start, end, dir) {
         let inc;
         dir == 0 ? (inc = 1) : (inc = 10);
         for (let i = start; i < end; i = i + inc) {
-            if (
-                this.gameboard.coords[i][1] ||
-                this.gameboard.coords[i][1] == undefined
-            )
-                return false;
+            if (this.gameboard.coords[i][2] != null) return false;
         }
         return true;
     }

@@ -131,6 +131,7 @@ const UI = (function () {
         let minimumDistance = ship.length - 1;
         const squares = document.querySelectorAll('.square');
         /*depending on ship size*/
+        console.log(ship.dir);
         if (ship.dir == 0) {
             squares.forEach((square) => {
                 if (square.classList.contains('unableY'))
@@ -166,7 +167,7 @@ const UI = (function () {
         ) {
             square.classList.add('unableY');
             if (square.classList.contains('ship'))
-                setDistanceBetweenShips(square, 0, minimumDistance);
+                setDistanceBetweenShips(square, 1, minimumDistance);
         }
     }
 
