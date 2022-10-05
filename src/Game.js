@@ -90,7 +90,16 @@ const Game = (function () {
         UI.displayCPUHit(x, y);
     }
 
-    function name(params) {}
+    function checkWinner() {
+        if (!player.opponentsGameboard.hasShips()) {
+            UI.showWinner(player);
+            return;
+        }
+        if (!cpu.opponentsGameboard.hasShips()) {
+            UI.showWinner(cpu);
+            return;
+        }
+    }
 
     return {
         main,
@@ -99,6 +108,7 @@ const Game = (function () {
         changeDirection,
         playerHits,
         cpuHits,
+        checkWinner,
     };
 })();
 

@@ -313,7 +313,9 @@ const UI = (function () {
                 const x = square.getAttribute('data-x');
                 const y = square.getAttribute('data-y');
                 Game.playerHits(x, y);
+                Game.checkWinner();
                 Game.cpuHits();
+                Game.checkWinner();
             });
         });
     }
@@ -344,6 +346,22 @@ const UI = (function () {
 
         direction.classList.add('unable');
     }
+
+    function showWinner(player) {
+        const endGameModal = document.querySelector('.endGame');
+        const overlay = document.querySelector('.overlay');
+        const winnerAnnouncement = document.querySelector('.winner');
+        const restartButton = document.querySelector('.restart');
+
+        winnerAnnouncement.textContent = 'The winner is ' + player.name;
+        overlay.classList.add('active');
+        endGameModal.classList.add('active');
+
+        restartButton.addEventListener('click', () => {
+            window.location.reload();
+        });
+    }
+
     return {
         enableButtons,
         availables,
@@ -355,6 +373,7 @@ const UI = (function () {
         displayPlayerHit,
         displayPlayerMiss,
         disableDirectionButton,
+        showWinner,
     };
 })();
 
