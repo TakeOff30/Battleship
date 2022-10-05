@@ -197,6 +197,9 @@
     background-color: white;
     width: 100%;
 }
+.square.cpu:hover {
+    border-color: green;
+}
 .square.occupied {
     opacity: 0.5;
     pointer-events: none;
@@ -211,8 +214,12 @@
 
 .square.hit {
     background-color: blue;
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 .square.ship.hit {
     background-color: red;
+    pointer-events: none;
+    cursor: not-allowed;
 }

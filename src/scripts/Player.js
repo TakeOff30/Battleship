@@ -1,4 +1,5 @@
 import { CleanPlugin } from 'webpack';
+import UI from '../UI';
 import Gameboard from './Gameboard';
 import Ship from './Ship';
 
@@ -28,16 +29,13 @@ export default class Player {
     }
 
     placeShipCPU() {
-        /*not working*/
         let dir = Math.round(Math.random());
         let x, y, start, end;
         if (dir == 0) {
             x = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
             y = Math.floor(Math.random() * 10 + 1);
             start = (y - 1) * 10 + x;
-            console.log(start);
             end = start + this.toPlace[0].length - 1;
-            console.log(end);
             if (end > 10) return;
             if (this.isPositionAvailable(start, end, dir)) {
                 this.placeShip(x, y, dir);
@@ -48,9 +46,7 @@ export default class Player {
             x = Math.floor(Math.random() * 10 + 1);
             y = Math.floor(Math.random() * (12 - this.toPlace[0].length) + 1);
             start = (y - 1) * 10 + x;
-            console.log(start);
             end = start + this.toPlace[0].length * 10;
-            console.log(end);
             if (end > 100) return;
             if (this.isPositionAvailable(start, end, dir)) {
                 this.placeShip(x, y, dir);
@@ -71,16 +67,5 @@ export default class Player {
 
     makePlay(x, y) {
         this.opponentsGameboard.receiveAttack(x, y);
-    }
-
-    makePlayCPU() {
-        let x = Math.floor(Math.random() * 10 + 1);
-        let y = Math.floor(Math.random() * 10 + 1);
-
-        while (!this.opponent.gameboard.availableSquare(x, y)) {
-            x = Math.floor(Math.random() * 10 + 1);
-            y = Math.floor(Math.random() * 10 + 1);
-        }
-        this.opponent.gameboard.receiveAttack(x, y);
     }
 }

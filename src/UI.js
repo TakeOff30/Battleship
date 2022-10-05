@@ -302,24 +302,52 @@ const UI = (function () {
             });
     }
 
-    function getUserX(square) {
-        const x = square.getAttribute('data-x');
-        return x;
+    function enableHits() {
+        const playerSquares = document.querySelectorAll('.player:not(.hit)');
+        playerSquares.forEach((square) => {
+            square.classList.add('hitting');
+        });
+        const cpuSquares = document.querySelectorAll('.square.cpu');
+        cpuSquares.forEach((square) => {
+            square.addEventListener('click', () => {
+                const x = square.getAttribute('data-x');
+                const y = square.getAttribute('data-y');
+                Game.playerHits(x, y);
+                Game.cpuHits();
+            });
+        });
     }
 
-    function getUserY(square) {
-        const y = square.getAttribute('data-y');
-        return y;
+    function displayCPUHit(x, y) {
+        const hitSquare = document.querySelector(
+            '.square.player[data-x ="' + x + '"][data-y ="' + y + '"]'
+        );
+        hitSquare.classList.add('hit');
     }
 
+    function displayPlayerHit(x, y) {
+        const hitSquare = document.querySelector(
+            '.square.cpu[data-x ="' + x + '"][data-y ="' + y + '"]'
+        );
+        hitSquare.classList.add('ship', 'hit');
+    }
+
+    function displayPlayerMiss(x, y) {
+        const hitSquare = document.querySelector(
+            '.square.cpu[data-x ="' + x + '"][data-y ="' + y + '"]'
+        );
+        hitSquare.classList.add('hit');
+    }
     return {
         enableButtons,
         availables,
         startGame,
-        getUserX,
-        getUserY,
         removeEventListeners,
         onSelection,
+        enableHits,
+        displayCPUHit,
+        displayPlayerHit,
+        displayPlayerMiss,
     };
 })();
 

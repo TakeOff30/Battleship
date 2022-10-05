@@ -10,7 +10,7 @@ const Game = (function () {
         setup();
     }
 
-    async function setup() {
+    function setup() {
         const playerName = document.querySelector('.playerTitle');
         player = new Player(playerName.textContent);
         cpu = new Player('CPU');
@@ -26,10 +26,12 @@ const Game = (function () {
         if (player.toPlace.length == 0) {
             placingCPU();
             startGame();
+            UI.enableHits();
+            console.log(player.opponentsGameboard);
         }
         UI.availables(player.toPlace[0]);
         const clickables = document.querySelectorAll(
-            '.square:not(.unable):not(.occupied)'
+            '.square.player:not(.unable):not(.occupied)'
         );
 
         clickables.forEach((clickable) => {
@@ -59,11 +61,32 @@ const Game = (function () {
             console.log(cpu.toPlace[0]);
             cpu.placeShipCPU();
         } while (cpu.toPlace.length > 0);
-        console.log(cpu.gameboard.coords);
     }
 
     function startGame() {
         UI.startGame();
+    }
+
+    function playerHits(x, y) {
+        player.makePlay(x, y);
+        const square = (parseInt(y) - 1) * 10 + parseInt(x);
+        if (player.opponentsGameboard.coords[square][2] == null) {
+            UI.displayPlayerMiss(x, y);
+        } else {
+            UI.displayPlayerHit(x, y);
+        }
+    }
+
+    function cpuHits() {
+        let x = Math.floor(Math.random() * 10 + 1);
+        let y = Math.floor(Math.random() * 10 + 1);
+
+        while (!cpu.opponentsGameboard.availableSquare(x, y)) {
+            x = Math.floor(Math.random() * 10 + 1);
+            y = Math.floor(Math.random() * 10 + 1);
+        }
+        cpu.makePlay(x, y);
+        UI.displayCPUHit(x, y);
     }
 
     return {
@@ -71,6 +94,8 @@ const Game = (function () {
         setup,
         placing,
         changeDirection,
+        playerHits,
+        cpuHits,
     };
 })();
 
