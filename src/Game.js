@@ -27,6 +27,7 @@ const Game = (function () {
             placingCPU();
             startGame();
             UI.enableHits();
+            UI.disableDirectionButton();
             console.log(player.opponentsGameboard);
         }
         UI.availables(player.toPlace[0]);
@@ -88,6 +89,8 @@ const Game = (function () {
         cpu.makePlay(x, y);
         UI.displayCPUHit(x, y);
     }
+
+    function name(params) {}
 
     return {
         main,

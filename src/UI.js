@@ -338,6 +338,12 @@ const UI = (function () {
         );
         hitSquare.classList.add('hit');
     }
+
+    function disableDirectionButton() {
+        const direction = document.querySelector('.direction');
+
+        direction.classList.add('unable');
+    }
     return {
         enableButtons,
         availables,
@@ -348,6 +354,7 @@ const UI = (function () {
         displayCPUHit,
         displayPlayerHit,
         displayPlayerMiss,
+        disableDirectionButton,
     };
 })();
 
